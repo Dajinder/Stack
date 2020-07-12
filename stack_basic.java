@@ -7,7 +7,8 @@ public class stack_basic{
 
     public static void solve(){
         // duplicatebrackets();
-        validParenthesis();
+        // validParenthesis();
+        addDuplicate();
     }
     public static void duplicatebrackets(){
         Scanner scn = new Scanner(System.in);
@@ -95,6 +96,23 @@ public class stack_basic{
         }else{
             System.out.println(false);
         }
-    }   
+    }
+    
+    public static void addDuplicate(){
+        Scanner scn = new Scanner(System.in);
+        String str = scn.nextLine();
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(ch == st.peek() && st.size()!=0){
+                st.pop();
+            }else{
+                st.push(ch);
+            }
+        }
+        while(st.size()!=0){
+            System.out.println(st.pop());
+        }
+    }
 
 }
