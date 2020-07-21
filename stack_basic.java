@@ -29,8 +29,11 @@ public class stack_basic{
         // String S ="()))((";
         // System.out.println(minAddToMakeValid(S));
         
-        int[] arr = {73, 74, 75, 71, 69, 72, 76, 73};
-        dailyTemperatures(arr);
+        // int[] arr = {73, 74, 75, 71, 69, 72, 76, 73};
+        // dailyTemperatures(arr);
+
+        String s = ")()())";
+        System.out.println(longestValidParenthesis(s)); 
     }
     public static void duplicatebrackets(){
         Scanner scn = new Scanner(System.in);
@@ -375,6 +378,27 @@ public class stack_basic{
             System.out.print(ans[i]+" ");
         }
 
+    }
+
+
+    public static int longestValidParenthesis(String s){
+        Stack<Character> st = new Stack<>();
+
+        int count = 0;
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch == ')'){
+                if(st.size()>0 && st.peek()=='('){
+                    st.pop();
+                    count++;
+                }else{
+                    st.push(ch);
+                }
+            }else{
+                st.push(ch);
+            }
+        }
+        return count*2;
     }
 
 }
