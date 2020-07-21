@@ -18,6 +18,19 @@ public class stack_basic{
         // nsor(arr);
         // ngol(arr);
         // nsol(arr);
+
+        // stock_span(arr);
+        
+        
+        // String S = "y#fo##f";
+        // String T = "y#f#o##f";
+        // System.out.println(backspaceCompare(S, T));
+        
+        // String S ="()))((";
+        // System.out.println(minAddToMakeValid(S));
+        
+        int[] arr = {73, 74, 75, 71, 69, 72, 76, 73};
+        dailyTemperatures(arr);
     }
     public static void duplicatebrackets(){
         Scanner scn = new Scanner(System.in);
@@ -262,4 +275,106 @@ public class stack_basic{
             System.out.print(ans[i]+" ");
         }
     }
+
+    //stock span
+    public static void stock_span(int[] arr){
+        Stack<Integer> st = new Stack<>();
+        int[] span = new int[arr.length];
+        st.push(0);
+        span[0] = 1;
+        for(int i=1;i<arr.length;i++){
+            while(st.size()!=0 && arr[i] > arr[st.peek()]){
+                st.pop();
+
+            }
+
+            if(st.size()==0){
+                span[i] = i+1;
+            }else{
+                span[i] = i-st.peek();
+            }
+
+            st.push(i);
+        }
+
+        for(int i=0;i<span.length;i++){
+            System.out.print(span[i]+" ");
+        }
+    }
+
+    public static boolean backspaceCompare(String S, String T){  //leetcode 844
+        Stack<Character>st1 = new Stack<>();
+        Stack<Character>st2 = new Stack<>();
+    
+        for(int i=0;i<S.length();i++){
+             if(S.charAt(i) == '#'){
+               if(st1.size()>0) st1.pop();
+            }else{
+                st1.push(S.charAt(i));
+            }
+        }
+
+        for(int i=0;i<T.length();i++){
+                 if(T.charAt(i) == '#'){
+               if(st2.size()>0) st2.pop();
+            }else{
+                st2.push(T.charAt(i));
+            }
+        }
+        
+        return st1.equals(st2); 
+        
+    }
+
+    public static int  minAddToMakeValid(String S) {  //leetcode 921
+        Stack<Character> st = new Stack<>();
+        for(int i=0;i<S.length();i++){
+            char ch = S.charAt(i);
+
+            if(ch == ')'){
+                if(st.size()>0 && st.peek()=='('){
+                    st.pop();
+                }else{
+                    st.push(ch);
+                }
+            }else{
+                st.push(ch);
+            }
+        }
+
+        int count = 0;
+        while(st.size()>0){
+            st.pop();
+            count++;    
+        }
+        return count;
+    }
+
+    public static void dailyTemperatures(int[] arr) {  //leetcode 739
+        Stack<Integer> st = new Stack<>();
+        int[] ans = new int[arr.length];
+        st.push(0);
+
+        for(int i=0;i<arr.length;i++){
+            while(st.size()!=0 && arr[i]>arr[st.peek()]){
+                int pos = st.peek();
+                ans[pos] = i-st.peek();
+                st.pop();
+            }
+            st.push(i);
+        }
+
+        while(st.size()!=0){
+            int pos = st.peek();
+            ans[pos] = 0;
+            st.pop();
+        }
+
+
+        for(int i=0;i<ans.length;i++){
+            System.out.print(ans[i]+" ");
+        }
+
+    }
+
 }
