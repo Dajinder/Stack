@@ -305,6 +305,50 @@ public class stack_basic{
         }
     }
 
+
+    public static void largestAreaInHistogram(int[] arr){
+
+        int[] rb = new int[arr.length];
+
+        Stack<Integer>st = new Stack<>();
+        st.push(0);
+        for(int i=0;i<arr.length;i++){
+            while(st.size()!=0 && arr[i]<arr[st.peek()]){
+                int pos = st.peek();
+                rb[pos] = arr[i];
+                st.pop();
+            }
+            st.push(i);
+        }
+
+        while(st.size()!=0){
+            int pos = st.peek();
+            rb[pos] = arr[arr.length];
+            st.pop();
+        }
+
+
+        int[] lb = new int[arr.length];
+
+
+        int maxArea = 0;
+        int area = 0;
+
+        for(int i=0;i<arr.length;i++){
+            int width = rb[i]-lb[i]-1;
+            int height = arr[i];
+
+            area = width*height;
+
+        }
+
+        if(area>maxArea){
+            area = maxArea;
+        }
+
+        System.out.println(area);
+    }
+
     public static boolean backspaceCompare(String S, String T){  //leetcode 844
         Stack<Character>st1 = new Stack<>();
         Stack<Character>st2 = new Stack<>();
@@ -380,25 +424,26 @@ public class stack_basic{
 
     }
 
-
     public static int longestValidParenthesis(String s){
-        Stack<Character> st = new Stack<>();
-
-        int count = 0;
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+        int max_len = 0;
         for(int i=0;i<s.length();i++){
-            char ch = s.charAt(i);
-            if(ch == ')'){
-                if(st.size()>0 && st.peek()=='('){
-                    st.pop();
-                    count++;
-                }else{
-                    st.push(ch);
+            if(st.peek()!=-1 && s.charAt(i) == ')' && s.charAt(st.peek()) == '('){
+                st.pop();
+                int len = i-st.peek();
+                if(max_len < len){
+                    max_len = len;
                 }
             }else{
-                st.push(ch);
+                st.push(i);
             }
         }
-        return count*2;
+        return max_len;
+
+
     }
+    
+    
 
 }
